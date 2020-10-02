@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My test page</title>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" 
+    <title>Coloring grid</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
   </head>
   <body>
+    <button onclick="reset()">Reset</button>
     <div class="container">
       
     </div>
     <script>
       const container = document.querySelector(".container");
+      var oldGrid;
 
-      function createGrid(){
-        for(i=0; i<256; i++){
-          const newDiv = document.createElement("div");
-          newDiv.setAttribute("onMouseover", "onHover(this)")
-          newDiv.classList.add("grid")
-          newDiv.textContent = "grid"+Math.floor(i/16+1)+" "+(i%16+1)
-          container.appendChild(newDiv);
+      function createGrid(grid){
+        document.documentElement.style.setProperty("--columns", grid);
+
+        for(i=0; i<grid; i++){
+          for(j=0; j<grid; j++){
+            const newDiv = document.createElement("div");
+            newDiv.setAttribute("onMouseover", "onHover(this)")
+            newDiv.classList.add("grid")
+            container.appendChild(newDiv);
+          }
+        }
+
+        oldGrid = grid
+      }
+
+      function clearGrid(){
+
+        for(i=0; i<oldGrid; i++){
+          for(j=0; j<oldGrid; j++){
+            const oldDiv = document.querySelector(".grid");
+            container.removeChild(oldDiv);
+          }
         }
       }
 
@@ -26,7 +43,29 @@
         target.style.backgroundColor= "blue";
       }
 
-      createGrid();
+      function reset(){
+        var height = prompt("How many squaes across do you want the new grid?", 16)
+
+        if (height <= 0) {
+          alert("0 is not a valid number")
+          return;
+        }
+        else if (height <= 5) {
+          alert("Height is too small. Please enter a larger number")
+          return;
+        }
+        else if (height >= 75) {
+          alert("Height is too large. Please enter a smaller number")
+          return;
+        }
+        
+        clearGrid();
+        createGrid(height);
+        
+
+      }
+
+      createGrid(16);
     </script>
   </body>
 </html>

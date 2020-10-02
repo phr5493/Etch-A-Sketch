@@ -1,6 +1,27 @@
+:root {
+    --columns-rows: 16;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .container{
     display: grid;
-    grid-template-columns: repeat(16, 6.25%);
+    grid-template-columns: repeat(var(--columns-rows), 1fr);
+    grid-template-rows: repeat(var(--columns-rows), 1fr);
+    width: 90vh;
+    height: 90vh;
+    max-width: 90vw;
+    max-height: 90vw;
+    border: 1px solid black;
+}
+
+.grid{
+    border: 1px solid black;
 }
 
 .hover{
